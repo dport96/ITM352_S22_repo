@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        store_name = "Dan";
+        var hits = 0;
+        var spins = 0;
+
+        var first_name ="Dan";
+        var last_name = "Port";
+
+        var over_half = false;
+
+    </script>
+    <meta charset="utf-8">
+    <title>Smart Phone Store</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Cherry+Swash|Raleway" rel="stylesheet">
+
+    <link href="products-style.css" rel="stylesheet">
+</head>
+
+<body onload="
+         hits_span.innerHTML = hits;   
+">
+    
+    <header>
+        <script>document.write('<font size="200%"><b>' + first_name + '</b> <em>' + last_name + '</em>\'s</font>');</script>
+        <h1>Used Smart Phone Store</h1>
+        <p style="text-align: center; font-weight: bold;">
+            Hits:<span id="hits_span"></span>
+            Spins:<span id="spins_span">0</span>
+            Hit/Spin:<span id="hit_spin_span">0</span>
+            You win:<span id="win_span">pending...</span>
+            </p>
+    </header>
+    <div>
+        <aside>
+            <div style="font-size:4rem;text-align:center;font-weight: bold;font-style: italic; color: white">
+                We sell from
+                around the globe!
+            </div>
+        </aside>
+
+        <main>
+            <section class="item"
+                onclick="
+                if(this.className != 'item') {
+                    this.className='item';
+                    hits_span.innerHTML = ++hits; 
+                    hit_spin_span.innerHTML = hits/spins;
+                } else {
+                    this.className='item rotate';
+                }
+                    over_half = over_half || ((spins < 2*hits) && (hits < spins))
+                    win_span.innerHTML =  over_half;
+                    " 
+                onmouseover="
+                if(this.className == 'item') {
+                    this.className='item rotate';
+                    spins++; spins_span.innerHTML = spins; 
+                    over_half = over_half || ((spins < 2*hits) && (hits < spins))
+                    win_span.innerHTML =  over_half;
+                }
+                    "
+                >
+                <h2>HTC</h2>
+                <p>$40.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg" alt="HTC Phones">
+            </section>
+
+            <section class="item">
+                <h2>Apple</h2>
+                <p>$75.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg">
+            </section>
+
+            <section class="item">
+                <h2>Nokia</h2>
+                <p>$35.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg">
+            </section>
+
+            <section class="item">
+                <h2>Samsung</h2>
+                <p>$45.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg">
+            </section>
+
+            <section class="item">
+                <h2>Blackberry</td>
+                </h2>
+                <p>$10.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg">
+            </section>
+
+        </main>
+    </div>
+    <footer>
+        <script> 
+         document.write(`
+        <table border="1" style="margin-left: auto; margin-right: auto; text-align: center;">
+            <tr><th colspan="2"><h1>Your One Stop For Used Phones - ${first_name[0]}.${last_name[0]}.'s</h1></th></tr>
+            <tr><td>1.</td><td><br />Copyright @ Dan Port</td></tr>
+            <tr><td>2.</td><td>2021</td></tr>
+            <tr><td>3.</td><td>11:15 AM</td></tr>
+        </table>
+        `);
+        </script>
+    </footer>
+</body>
+
+</html>
+<script>
+
+
+</script>
