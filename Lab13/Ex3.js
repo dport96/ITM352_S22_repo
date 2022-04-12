@@ -76,7 +76,7 @@ app.get("/register", function (request, response) {
     users[username].password = request.body.password;
     users[username].email = request.body.email;
 
-    fs.writeFileSync(filename, JSON.stringify(users));
+    fs.writeFileSync(filename, JSON.stringify(users);
 
 
 
