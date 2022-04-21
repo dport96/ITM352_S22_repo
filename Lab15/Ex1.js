@@ -23,10 +23,21 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 
+var session = require('express-session');
+
+app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
+
+
 app.get("/login", function (request, response) {
+    // check last time user logged in
+    var last_login = 'First login!';
+    if(typeof request.session.last_login != 'undefined') {
+        last_login = request.session.last_login;
+    }
     // Give a simple login form
     str = `
 <body>
+Youlast logged in on: ${last_login}<br>
 <form action="" method="POST">
 <input type="text" name="username" size="40" placeholder="enter username" ><br />
 <input type="password" name="password" size="40" placeholder="enter password"><br />
@@ -43,6 +54,7 @@ app.post("/login", function (request, response) {
     if(typeof users[request.body.username] != 'undefined') {
         // username exists, so get the stored password and check if it matches password entered
         if(users[request.body.username].password == request.body.password) {
+            request.session.last_login = new Date();
             response.send(`${request.body.username} is logged in!`);
             return;
         } else {
@@ -87,11 +99,21 @@ app.get("/register", function (request, response) {
     response.send(`cookie sent for ${myname}`);
  });
 
+ app.get("/expire_cookie", function (request, response) {
+    var myname = "Dan Port";
+    response.cookie('users_name', '', {expire: 0});
+    response.send(`cookie sent for ${myname}`);
+ });
+
  app.get("/get_cookie", function (request, response) {
     console.log(request.cookies);
     response.send(`Welcome to the Use Cookie page ${request.cookies['users_name']}`);
  });
 
+ app.get("/use_session", function (request, response) {
+    console.log(request.session);
+    response.send(`welcome, your session ID is ${request.session.id}`);
+ });
 
 
 app.listen(8080, () => console.log(`listening on port 8080`));
