@@ -35,9 +35,14 @@ app.get("/login", function (request, response) {
         last_login = request.session.last_login;
     }
     // Give a simple login form
+    var welcome_msg = 'Welcome, please log in or register.';
+    if(typeof request.cookies.username != 'undefined') {
+        welcome_msg = `Welcome ${request.cookies.username}, you are logged in.`;
+    }
     str = `
 <body>
-Youlast logged in on: ${last_login}<br>
+${welcome_msg}
+You last logged in on: ${last_login}<br>
 <form action="" method="POST">
 <input type="text" name="username" size="40" placeholder="enter username" ><br />
 <input type="password" name="password" size="40" placeholder="enter password"><br />
@@ -49,12 +54,13 @@ Youlast logged in on: ${last_login}<br>
  });
 
 app.post("/login", function (request, response) {
-    console.log(request.body);
+    console.log(request.sessionStore.sessions);
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     if(typeof users[request.body.username] != 'undefined') {
         // username exists, so get the stored password and check if it matches password entered
         if(users[request.body.username].password == request.body.password) {
             request.session.last_login = new Date();
+            response.cookie('username', request.body.username);
             response.send(`${request.body.username} is logged in!`);
             return;
         } else {
